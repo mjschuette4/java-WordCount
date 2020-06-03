@@ -10,16 +10,34 @@ public class Main {
         // New Document without spaces/ punctuation marks
         String cleanDocument = textDocument.replaceAll("[[\\.\\?\\!\\,\\;\\:\\{\\}\\(\\)\\']]", "");
 
-        //Separtes the string into words
+        // Separtes the string into words
         String[] words = cleanDocument.split(" +");
-        
+
         HashMap<String, Integer> wordCount = new HashMap<>();
         for (String word : words) {
             Integer number = wordCount.get(word);
             number = (number == null) ? 1 : number + 1;
             wordCount.put(word, number);
         }
-        System.out.println(wordCount);
+        // System.out.println(wordCount);
+
+        ArrayList<HashMap.Entry<String, Integer>> newarray = new ArrayList<HashMap.Entry<String, Integer>>();
+        newarray.addAll(wordCount.entrySet());
+
+        Collections.sort(newarray, new Comparator<Map.Entry<String, Integer>>() {
+            public int compare(HashMap.Entry<String, Integer> o1, HashMap.Entry<String, Integer> o2) {
+                return o2.getValue() - o1.getValue();
+            }
+        });
+        int m = 0;
+        for (HashMap.Entry<String, Integer> f : newarray) {
+            m += 1;
+
+            System.out.println("COMMON WORD <" + f.getKey() + "> occurs " + f.getValue() + " times");
+            if (m == 50) {
+                break;
+            }
+        }
     }
 
     public static void main(String[] args) {
